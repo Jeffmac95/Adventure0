@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import org.w3c.dom.Text;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -19,6 +20,8 @@ public class Main extends ApplicationAdapter {
     public TextureAtlas atlas;
     float deltaTime;
 
+    public ShapeRenderer shapeRenderer;
+
     public Weapon sword;
 
 
@@ -30,6 +33,7 @@ public class Main extends ApplicationAdapter {
         spriteBatch = new SpriteBatch();
         hero = new Player(atlas);
         sword = new Weapon(atlas);
+        shapeRenderer = new ShapeRenderer();
     }
 
     @Override
@@ -40,21 +44,27 @@ public class Main extends ApplicationAdapter {
 
         spriteBatch.begin();
         hero.inputHandling(deltaTime, atlas);
-        sword.draw(spriteBatch);
         hero.draw(spriteBatch);
+        sword.draw(spriteBatch);
         spriteBatch.end();
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.setColor(1, 1, 1, 0.5f);
+
+        hero.updateRectangle();
+
+        shapeRenderer.rect(hero.playerRectangle.x, hero.playerRectangle.y, hero.playerRectangle.width, hero.playerRectangle.height);
+        shapeRenderer.end();
     }
 
     @Override
     public void dispose() {
-
         spriteBatch.dispose();
         atlas.dispose();
     }
 
     @Override
     public void resize(int width, int height) {
-
         spriteBatch.getProjectionMatrix().setToOrtho2D(hero.xPos, hero.yPos, width, height);
     }
 }

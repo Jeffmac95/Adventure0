@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Player extends InputAdapter {
 
@@ -17,6 +18,8 @@ public class Player extends InputAdapter {
     public float speed;
     public boolean isMoving;
     public int lastDirection;
+    Rectangle playerRectangle;
+    Weapon sword;
 
     public Player(TextureAtlas atlas) {
         heroWidth = 64;
@@ -28,13 +31,21 @@ public class Player extends InputAdapter {
         lastDirection = Input.Keys.DOWN;
         playerSprite = new Sprite(atlas.findRegion("hero"));
         playerSprite.setSize(heroHeight, heroWidth);
+        playerRectangle = new Rectangle(xPos, yPos, heroWidth, heroHeight);
     }
 
     public void draw(SpriteBatch spriteBatch) {
         playerSprite.draw(spriteBatch);
     }
 
+    public void updateRectangle() {
+        playerRectangle.setPosition(xPos, yPos);
+    }
+
     public void checkCollision() {
+
+        updateRectangle();
+
         if (yPos > Main.HEIGHT - heroHeight) {
             yPos = Main.HEIGHT - heroHeight;
         } else if (yPos < 0) {
@@ -44,6 +55,10 @@ public class Player extends InputAdapter {
             xPos = 0;
         } else if (xPos > Main.WIDTH - heroWidth) {
             xPos = Main.WIDTH - heroWidth;
+        }
+
+        if (xPos == Main.WIDTH / 2 && yPos == Main.HEIGHT / 2) {
+            sword.swordSprite.getTexture().dispose();
         }
     }
 
@@ -80,8 +95,6 @@ public class Player extends InputAdapter {
             lastDirection = Input.Keys.RIGHT;
         }
 
-        checkCollision();
-
         if (!isMoving) {
             switch (lastDirection) {
                 case Input.Keys.UP:
@@ -99,6 +112,7 @@ public class Player extends InputAdapter {
             }
         }
 
+        checkCollision();
         playerSprite.setPosition(xPos, yPos);
     }
 }
