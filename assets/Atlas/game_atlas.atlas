@@ -1,0 +1,15 @@
+game_atlas.png
+size:512,128
+repeat:none
+hero
+bounds:2,2,64,64
+hero_backwards
+bounds:68,2,64,64
+hero_facing_left
+bounds:200,2,64,64
+hero_facing_right
+bounds:332,2,64,64
+hero_walking_left
+bounds:266,2,64,64
+hero_walking_right
+bounds:134,2,64,64
