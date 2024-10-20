@@ -97,14 +97,32 @@ public class Player extends InputAdapter {
 
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             yPos += speed * deltaTime;
-            playerSprite.setRegion(atlas.findRegion("hero_backwards"));
+
+            if (animationTimer > frameDuration) {
+                playerSprite.setRegion(atlas.findRegion("hero_backwards_walking_left"));
+            } else {
+                playerSprite.setRegion(atlas.findRegion("hero_backwards_walking_right"));
+            }
+
+            if (animationTimer > frameDuration * 2) {
+                animationTimer = 0.0f;
+            }
 
             isMoving = true;
             lastDirection = Input.Keys.UP;
 
             } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 yPos -= speed * deltaTime;
-                playerSprite.setRegion(atlas.findRegion("hero"));
+
+                if (animationTimer > frameDuration) {
+                    playerSprite.setRegion(atlas.findRegion("hero_walking_right_foot"));
+                } else {
+                    playerSprite.setRegion(atlas.findRegion("hero_walking_left_foot"));
+                }
+
+                if (animationTimer > frameDuration * 2) {
+                    animationTimer = 0.0f;
+                }
 
                 isMoving = true;
                 lastDirection = Input.Keys.DOWN;
@@ -119,6 +137,7 @@ public class Player extends InputAdapter {
                 playerSprite.setRegion(atlas.findRegion("hero_walking_left"));
             }
 
+            // resetting the timer if it passes double the frame duration.
             if (animationTimer > frameDuration * 2) {
                 animationTimer = 0.0f;
             }
@@ -172,13 +191,31 @@ public class Player extends InputAdapter {
         for (int i = 0; i < weapons.size(); i++) {
             if (weapons.get(i) == sword) {
                 if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-                    playerSprite.setRegion(atlas.findRegion("hero_backwards"));
+
+                    if (animationTimer > frameDuration) {
+                        playerSprite.setRegion(atlas.findRegion(("hero_backwards_walking_left")));
+                    } else {
+                        playerSprite.setRegion(atlas.findRegion("hero_backwards_walking_right"));
+                    }
+
+                    if (animationTimer > frameDuration * 2) {
+                        animationTimer = 0.0f;
+                    }
 
                     isMoving = true;
                     lastDirection = Input.Keys.UP;
 
                 } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-                    playerSprite.setRegion(atlas.findRegion("hero_with_sword"));
+
+                    if (animationTimer > frameDuration) {
+                        playerSprite.setRegion(atlas.findRegion("hero_with_sword_walking_left_foot"));
+                    } else {
+                        playerSprite.setRegion(atlas.findRegion("hero_with_sword_walking_right_foot"));
+                    }
+
+                    if (animationTimer > frameDuration * 2) {
+                        animationTimer = 0.0f;
+                    }
 
                     isMoving = true;
                     lastDirection = Input.Keys.DOWN;
