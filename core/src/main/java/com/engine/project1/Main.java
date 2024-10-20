@@ -65,6 +65,7 @@ public class Main extends ApplicationAdapter {
     public void dispose() {
         spriteBatch.dispose();
         atlas.dispose();
+        Player.weapons.clear();
     }
 
     @Override

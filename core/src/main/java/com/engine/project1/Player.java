@@ -23,7 +23,9 @@ public class Player extends InputAdapter {
     Rectangle playerRectangle;
     Weapon sword;
     public boolean collisionDetected = false;
-    public ArrayList<Weapon> weapons;
+    public static ArrayList<Weapon> weapons;
+    public float animationTimer = 0.0f;
+    public float frameDuration = 0.2f;
 
     public Player(TextureAtlas atlas, Weapon sword) {
         heroWidth = 64;
@@ -90,6 +92,7 @@ public class Player extends InputAdapter {
     }
 
     public void inputHandling(float deltaTime, TextureAtlas atlas) {
+        animationTimer += deltaTime;
         isMoving = false;
 
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
@@ -109,14 +112,32 @@ public class Player extends InputAdapter {
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             xPos -= speed * deltaTime;
-            playerSprite.setRegion(atlas.findRegion("hero_walking_left"));
+
+            if (animationTimer > frameDuration) {
+                playerSprite.setRegion(atlas.findRegion("hero_facing_left"));
+            } else {
+                playerSprite.setRegion(atlas.findRegion("hero_walking_left"));
+            }
+
+            if (animationTimer > frameDuration * 2) {
+                animationTimer = 0.0f;
+            }
 
             isMoving = true;
             lastDirection = Input.Keys.LEFT;
 
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             xPos += speed * deltaTime;
-            playerSprite.setRegion(atlas.findRegion("hero_walking_right"));
+
+            if (animationTimer > frameDuration) {
+                playerSprite.setRegion(atlas.findRegion("hero_facing_right"));
+            } else {
+                playerSprite.setRegion(atlas.findRegion("hero_walking_right"));
+            }
+
+            if (animationTimer > frameDuration * 2) {
+                animationTimer = 0.0f;
+            }
 
             isMoving = true;
             lastDirection = Input.Keys.RIGHT;
@@ -139,6 +160,7 @@ public class Player extends InputAdapter {
                 default:
                     playerSprite.setRegion(atlas.findRegion("hero"));
             }
+            animationTimer = 0.0f;
         }
 
         checkSprite(atlas);
@@ -161,12 +183,30 @@ public class Player extends InputAdapter {
                     isMoving = true;
                     lastDirection = Input.Keys.DOWN;
                 } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-                    playerSprite.setRegion(atlas.findRegion("hero_walking_left_with_sword"));
+
+                    if (animationTimer > frameDuration) {
+                        playerSprite.setRegion(atlas.findRegion("hero_facing_left_with_sword"));
+                    } else {
+                        playerSprite.setRegion(atlas.findRegion("hero_walking_left_with_sword"));
+                    }
+
+                    if (animationTimer > frameDuration * 2) {
+                        animationTimer = 0.0f;
+                    }
 
                     isMoving = true;
                     lastDirection = Input.Keys.LEFT;
                 } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-                    playerSprite.setRegion(atlas.findRegion("hero_walking_right_with_sword"));
+
+                    if (animationTimer > frameDuration) {
+                        playerSprite.setRegion(atlas.findRegion("hero_facing_right_with_sword"));
+                    } else {
+                        playerSprite.setRegion(atlas.findRegion("hero_walking_right_with_sword"));
+                    }
+
+                    if (animationTimer > frameDuration * 2) {
+                        animationTimer = 0.0f;
+                    }
 
                     isMoving = true;
                     lastDirection = Input.Keys.RIGHT;
