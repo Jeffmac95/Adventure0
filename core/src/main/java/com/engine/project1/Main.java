@@ -19,13 +19,17 @@ public class Main extends ApplicationAdapter {
     public TextureAtlas atlas;
     float deltaTime;
 
+    public Weapon sword;
+
 
     @Override
     public void create() {
 
-        atlas = new TextureAtlas(Utils.getInternalPath("atlas/game_atlas.atlas"));
+
+        atlas = new TextureAtlas(Utils.getInternalPath("atlas/game_atlas_new.atlas"));
         spriteBatch = new SpriteBatch();
         hero = new Player(atlas);
+        sword = new Weapon(atlas);
     }
 
     @Override
@@ -36,6 +40,7 @@ public class Main extends ApplicationAdapter {
 
         spriteBatch.begin();
         hero.inputHandling(deltaTime, atlas);
+        sword.draw(spriteBatch);
         hero.draw(spriteBatch);
         spriteBatch.end();
     }
