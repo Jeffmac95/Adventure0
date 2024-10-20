@@ -3,7 +3,6 @@ package com.engine.project1;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -35,25 +34,32 @@ public class Player extends InputAdapter {
         playerSprite.draw(spriteBatch);
     }
 
+    public void checkCollision() {
+        if (yPos > Main.HEIGHT - heroHeight) {
+            yPos = Main.HEIGHT - heroHeight;
+        } else if (yPos < 0) {
+            yPos = 0;
+        }
+        if (xPos < 0) {
+            xPos = 0;
+        } else if (xPos > Main.WIDTH - heroWidth) {
+            xPos = Main.WIDTH - heroWidth;
+        }
+    }
+
     public void inputHandling(float deltaTime, TextureAtlas atlas) {
         isMoving = false;
 
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             yPos += speed * deltaTime;
-            playerSprite = new Sprite(atlas.findRegion("hero_backwards"));
-            if (yPos > Main.HEIGHT - heroHeight) {
-                yPos = Main.HEIGHT - heroHeight;
-            }
+            playerSprite.setRegion(atlas.findRegion("hero_backwards"));
 
             isMoving = true;
             lastDirection = Input.Keys.UP;
 
             } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 yPos -= speed * deltaTime;
-                playerSprite = new Sprite(atlas.findRegion("hero"));
-                if (yPos < 0) {
-                    yPos = 0;
-                }
+                playerSprite.setRegion(atlas.findRegion("hero"));
 
                 isMoving = true;
                 lastDirection = Input.Keys.DOWN;
@@ -61,38 +67,34 @@ public class Player extends InputAdapter {
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             xPos -= speed * deltaTime;
-            playerSprite = new Sprite(atlas.findRegion("hero_walking_left"));
-            if (xPos < 0) {
-                xPos = 0;
-            }
+            playerSprite.setRegion(atlas.findRegion("hero_walking_left"));
 
             isMoving = true;
             lastDirection = Input.Keys.LEFT;
 
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             xPos += speed * deltaTime;
-            playerSprite = new Sprite(atlas.findRegion("hero_walking_right"));
-            if (xPos > Main.WIDTH - heroWidth) {
-                xPos = Main.WIDTH - heroWidth;
-            }
+            playerSprite.setRegion(atlas.findRegion("hero_walking_right"));
 
             isMoving = true;
             lastDirection = Input.Keys.RIGHT;
         }
 
+        checkCollision();
+
         if (!isMoving) {
             switch (lastDirection) {
                 case Input.Keys.UP:
-                    playerSprite = new Sprite(atlas.findRegion("hero_backwards"));
+                    playerSprite.setRegion(atlas.findRegion("hero_backwards"));
                     break;
                 case Input.Keys.DOWN:
-                    playerSprite = new Sprite(atlas.findRegion("hero"));
+                    playerSprite.setRegion(atlas.findRegion("hero"));
                     break;
                 case Input.Keys.LEFT:
-                    playerSprite = new Sprite(atlas.findRegion("hero_facing_left"));
+                    playerSprite.setRegion(atlas.findRegion("hero_facing_left"));
                     break;
                 case Input.Keys.RIGHT:
-                    playerSprite = new Sprite(atlas.findRegion("hero_facing_right"));
+                    playerSprite.setRegion(atlas.findRegion("hero_facing_right"));
                     break;
             }
         }
