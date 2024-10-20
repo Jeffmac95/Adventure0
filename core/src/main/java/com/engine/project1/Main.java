@@ -43,6 +43,7 @@ public class Main extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         spriteBatch.begin();
+        hero.checkSprite(atlas);
         hero.inputHandling(deltaTime, atlas);
         hero.draw(spriteBatch);
         sword.draw(spriteBatch);

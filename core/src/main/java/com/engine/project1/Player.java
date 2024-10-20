@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
 
+import java.util.ArrayList;
+
 public class Player extends InputAdapter {
 
     public Sprite playerSprite;
@@ -21,6 +23,7 @@ public class Player extends InputAdapter {
     Rectangle playerRectangle;
     Weapon sword;
     public boolean collisionDetected = false;
+    public ArrayList<Weapon> weapons;
 
     public Player(TextureAtlas atlas, Weapon sword) {
         heroWidth = 64;
@@ -34,7 +37,7 @@ public class Player extends InputAdapter {
         playerSprite.setSize(heroHeight, heroWidth);
         playerRectangle = new Rectangle(xPos, yPos, heroWidth, heroHeight);
         this.sword = sword;
-
+        weapons = new ArrayList<Weapon>();
     }
 
     public void draw(SpriteBatch spriteBatch) {
@@ -64,6 +67,8 @@ public class Player extends InputAdapter {
         if (!collisionDetected && playerRectangle.overlaps(sword.swordRectangle)) {
             System.out.println("collision detected");
             sword.swordSprite.setAlpha(0);
+
+            weapons.add(sword);
 
             if (xPos > sword.xPos && Math.abs(yPos - sword.yPos) < 3.0f) {
                 switch (lastDirection) {
@@ -131,10 +136,61 @@ public class Player extends InputAdapter {
                 case Input.Keys.RIGHT:
                     playerSprite.setRegion(atlas.findRegion("hero_facing_right"));
                     break;
+                default:
+                    playerSprite.setRegion(atlas.findRegion("hero"));
             }
         }
 
+        checkSprite(atlas);
         checkCollision();
         playerSprite.setPosition(xPos, yPos);
+    }
+
+    public void checkSprite(TextureAtlas atlas) {
+        for (int i = 0; i < weapons.size(); i++) {
+            if (weapons.get(i) == sword) {
+                if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+                    playerSprite.setRegion(atlas.findRegion("hero_backwards"));
+
+                    isMoving = true;
+                    lastDirection = Input.Keys.UP;
+
+                } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+                    playerSprite.setRegion(atlas.findRegion("hero_with_sword"));
+
+                    isMoving = true;
+                    lastDirection = Input.Keys.DOWN;
+                } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                    playerSprite.setRegion(atlas.findRegion("hero_walking_left_with_sword"));
+
+                    isMoving = true;
+                    lastDirection = Input.Keys.LEFT;
+                } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                    playerSprite.setRegion(atlas.findRegion("hero_walking_right_with_sword"));
+
+                    isMoving = true;
+                    lastDirection = Input.Keys.RIGHT;
+                }
+
+                if (!isMoving) {
+                    switch (lastDirection) {
+                        case Input.Keys.UP:
+                            playerSprite.setRegion(atlas.findRegion("hero_backwards"));
+                            break;
+                        case Input.Keys.DOWN:
+                            playerSprite.setRegion(atlas.findRegion("hero_with_sword"));
+                            break;
+                        case Input.Keys.LEFT:
+                            playerSprite.setRegion(atlas.findRegion("hero_facing_left_with_sword"));
+                            break;
+                        case Input.Keys.RIGHT:
+                            playerSprite.setRegion(atlas.findRegion("hero_facing_right_with_sword"));
+                            break;
+                        default:
+                            playerSprite.setRegion(atlas.findRegion("hero_with_sword"));
+                    }
+                }
+            }
+        }
     }
 }
