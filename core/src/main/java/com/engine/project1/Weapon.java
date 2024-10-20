@@ -23,4 +23,8 @@ public class Weapon {
     public void draw(SpriteBatch spriteBatch) {
         swordSprite.draw(spriteBatch);
     }
+
+    public void updateRectangle() {
+        swordRectangle.setPosition(xPos, yPos);
+    }
 }

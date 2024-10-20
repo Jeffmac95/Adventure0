@@ -20,8 +20,9 @@ public class Player extends InputAdapter {
     public int lastDirection;
     Rectangle playerRectangle;
     Weapon sword;
+    public boolean collisionDetected = false;
 
-    public Player(TextureAtlas atlas) {
+    public Player(TextureAtlas atlas, Weapon sword) {
         heroWidth = 64;
         heroHeight = 64;
         xPos = 0;
@@ -32,6 +33,8 @@ public class Player extends InputAdapter {
         playerSprite = new Sprite(atlas.findRegion("hero"));
         playerSprite.setSize(heroHeight, heroWidth);
         playerRectangle = new Rectangle(xPos, yPos, heroWidth, heroHeight);
+        this.sword = sword;
+
     }
 
     public void draw(SpriteBatch spriteBatch) {
@@ -45,6 +48,7 @@ public class Player extends InputAdapter {
     public void checkCollision() {
 
         updateRectangle();
+        sword.updateRectangle();
 
         if (yPos > Main.HEIGHT - heroHeight) {
             yPos = Main.HEIGHT - heroHeight;
@@ -57,8 +61,26 @@ public class Player extends InputAdapter {
             xPos = Main.WIDTH - heroWidth;
         }
 
-        if (xPos == Main.WIDTH / 2 && yPos == Main.HEIGHT / 2) {
-            sword.swordSprite.getTexture().dispose();
+        if (!collisionDetected && playerRectangle.overlaps(sword.swordRectangle)) {
+            System.out.println("collision detected");
+            sword.swordSprite.setAlpha(0);
+
+            if (xPos > sword.xPos && Math.abs(yPos - sword.yPos) < 3.0f) {
+                switch (lastDirection) {
+                    case Input.Keys.UP:
+                        yPos = sword.yPos + heroHeight;
+                        break;
+                    case Input.Keys.DOWN:
+                        yPos = sword.yPos - heroHeight;
+                        break;
+                    case Input.Keys.LEFT:
+                        xPos = sword.xPos - heroWidth;
+                        break;
+                    case Input.Keys.RIGHT:
+                        xPos = sword.xPos + heroWidth;
+                        break;
+                }
+            }
         }
     }
 

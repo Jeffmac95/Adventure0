@@ -31,8 +31,8 @@ public class Main extends ApplicationAdapter {
 
         atlas = new TextureAtlas(Utils.getInternalPath("atlas/game_atlas_new.atlas"));
         spriteBatch = new SpriteBatch();
-        hero = new Player(atlas);
         sword = new Weapon(atlas);
+        hero = new Player(atlas, sword);
         shapeRenderer = new ShapeRenderer();
     }
 
@@ -46,13 +46,16 @@ public class Main extends ApplicationAdapter {
         hero.inputHandling(deltaTime, atlas);
         hero.draw(spriteBatch);
         sword.draw(spriteBatch);
+
         spriteBatch.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(1, 1, 1, 0.5f);
+        shapeRenderer.setColor(1f, 0f, 0f, 1);
 
+        sword.updateRectangle();
         hero.updateRectangle();
 
+        shapeRenderer.rect(sword.xPos, sword.yPos, sword.swordSize, sword.swordSize);
         shapeRenderer.rect(hero.playerRectangle.x, hero.playerRectangle.y, hero.playerRectangle.width, hero.playerRectangle.height);
         shapeRenderer.end();
     }
