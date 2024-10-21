@@ -13,13 +13,13 @@ import java.util.ArrayList;
 public class Player extends InputAdapter {
 
     public Sprite playerSprite;
-    public int heroWidth;
-    public int heroHeight;
-    public float xPos;
-    public float yPos;
-    public float speed;
-    public boolean isMoving;
-    public int lastDirection;
+    public int heroWidth = 64;
+    public int heroHeight = 64;
+    public float xPos = 0;
+    public float yPos = 0;
+    public float speed = 100.0f;
+    public boolean isMoving = false;
+    public int lastDirection = Input.Keys.DOWN;
     Rectangle playerRectangle;
     Weapon sword;
     public boolean collisionDetected = false;
@@ -28,17 +28,12 @@ public class Player extends InputAdapter {
     public float frameDuration = 0.2f;
 
     public Player(TextureAtlas atlas, Weapon sword) {
-        heroWidth = 64;
-        heroHeight = 64;
-        xPos = 0;
-        yPos = 0;
-        speed = 100.0f;
-        isMoving = false;
-        lastDirection = Input.Keys.DOWN;
+
         playerSprite = new Sprite(atlas.findRegion("hero"));
-        playerSprite.setSize(heroHeight, heroWidth);
+        playerSprite.setSize(heroWidth, heroHeight);
         playerRectangle = new Rectangle(xPos, yPos, heroWidth, heroHeight);
         this.sword = sword;
+
         weapons = new ArrayList<Weapon>();
     }
 
@@ -72,7 +67,7 @@ public class Player extends InputAdapter {
 
             weapons.add(sword);
 
-            if (xPos > sword.xPos && Math.abs(yPos - sword.yPos) < 3.0f) {
+            if (xPos > sword.xPos && Math.abs(yPos - sword.yPos) < 5.0f) {
                 switch (lastDirection) {
                     case Input.Keys.UP:
                         yPos = sword.yPos + heroHeight;

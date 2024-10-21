@@ -17,6 +17,7 @@ public class Main extends ApplicationAdapter {
     public static final int HEIGHT = 480;
     public SpriteBatch spriteBatch;
     public Player hero;
+    //public Goblin goblinOne;
     public TextureAtlas atlas;
     float deltaTime;
 
@@ -29,10 +30,11 @@ public class Main extends ApplicationAdapter {
     public void create() {
 
 
-        atlas = new TextureAtlas(Utils.getInternalPath("atlas/game_atlas_new.atlas"));
+        atlas = new TextureAtlas(Gdx.files.internal("atlas/game_atlas_new.atlas"));
         spriteBatch = new SpriteBatch();
         sword = new Weapon(atlas);
         hero = new Player(atlas, sword);
+        //goblinOne = new Goblin(atlas);
         shapeRenderer = new ShapeRenderer();
     }
 
@@ -47,17 +49,19 @@ public class Main extends ApplicationAdapter {
         hero.inputHandling(deltaTime, atlas);
         hero.draw(spriteBatch);
         sword.draw(spriteBatch);
+        //goblinOne.draw(spriteBatch);
 
         spriteBatch.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(1f, 0f, 0f, 1);
 
-        sword.updateRectangle();
         hero.updateRectangle();
+        sword.updateRectangle();
 
         shapeRenderer.rect(sword.xPos, sword.yPos, sword.swordSize, sword.swordSize);
         shapeRenderer.rect(hero.playerRectangle.x, hero.playerRectangle.y, hero.playerRectangle.width, hero.playerRectangle.height);
+        //shapeRenderer.rect(goblinOne.xPos, goblinOne.yPos, goblinOne.goblinWidth, goblinOne.goblinHeight);
         shapeRenderer.end();
     }
 

@@ -11,7 +11,7 @@ public class Weapon {
     public int swordSize = 64;
     public int xPos = Main.WIDTH / 2;
     public int yPos = Main.HEIGHT / 2;
-    Rectangle swordRectangle;
+    public Rectangle swordRectangle;
 
     public Weapon(TextureAtlas atlas) {
         swordSprite = new Sprite(atlas.findRegion("sword"));

@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: com.engine.project1.lwjgl3.Lwjgl3Launcher
+Class-Path: com.engine.project1.Main
+
