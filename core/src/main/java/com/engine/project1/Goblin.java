@@ -10,8 +10,8 @@ public class Goblin {
     public Sprite goblinSprite;
     public int goblinWidth = 64;
     public int goblinHeight = 64;
-    public int xPos = 0;
-    public int yPos = 0;
+    public int xPos = Main.WIDTH - goblinWidth;
+    public int yPos = Main.HEIGHT - goblinHeight;
     public Rectangle goblinRectangle;
 
     public Goblin(TextureAtlas atlas) {
