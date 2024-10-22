@@ -75,7 +75,7 @@ public class Player extends InputAdapter {
             if (xPos + table.tableWidth > table.tableX && Math.abs(yPos - table.tableY) < table.tableHeight) {
                 switch (lastDirection) {
                     case Input.Keys.UP:
-                        yPos = table.tableY + (heroHeight * 2);
+                        yPos = table.tableY + table.tableWidth;
                         break;
                     case Input.Keys.DOWN:
                         yPos = table.tableY - heroHeight;
@@ -84,7 +84,7 @@ public class Player extends InputAdapter {
                         xPos = table.tableX - heroWidth;
                         break;
                     case Input.Keys.RIGHT:
-                        xPos = table.tableX + (heroWidth * 2);
+                        xPos = table.tableX + table.tableWidth;
                         break;
                 }
             }

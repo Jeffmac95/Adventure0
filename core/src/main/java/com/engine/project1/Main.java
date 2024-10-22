@@ -63,7 +63,7 @@ public class Main extends ApplicationAdapter {
         spriteBatch.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(0.8f, 0.0f, 0.0f, 1);
+        shapeRenderer.setColor(1.0f, 0.0f, 0.0f, 1);
 
         hero.updateRectangle();
         sword.updateRectangle();
