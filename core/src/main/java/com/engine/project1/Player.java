@@ -67,7 +67,7 @@ public class Player extends InputAdapter {
 
             weapons.add(sword);
 
-            if (xPos > sword.xPos && Math.abs(yPos - sword.yPos) < 5.0f) {
+            if (xPos + sword.swordSize > sword.xPos && Math.abs(yPos - sword.yPos) < sword.swordSize) {
                 switch (lastDirection) {
                     case Input.Keys.UP:
                         yPos = sword.yPos + heroHeight;

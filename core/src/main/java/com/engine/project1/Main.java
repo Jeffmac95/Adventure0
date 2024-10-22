@@ -42,6 +42,7 @@ public class Main extends ApplicationAdapter {
 
         deltaTime = Gdx.graphics.getDeltaTime();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0.54f, 0.54f, 0.54f, 1.0f);
 
         spriteBatch.begin();
 
@@ -51,16 +52,16 @@ public class Main extends ApplicationAdapter {
         sword.draw(spriteBatch);
 
         goblinOne.draw(spriteBatch);
-        goblinOne.updateRectangle();
 
 
         spriteBatch.end();
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(1f, 0f, 0f, 1);
+        shapeRenderer.setColor(0.8f, 0.0f, 0.0f, 1);
 
         hero.updateRectangle();
         sword.updateRectangle();
+        goblinOne.updateRectangle();
 
 
         shapeRenderer.rect(sword.xPos, sword.yPos, sword.swordSize, sword.swordSize);
