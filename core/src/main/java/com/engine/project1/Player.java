@@ -18,6 +18,8 @@ public class Player extends InputAdapter {
     public float xPos = 0.0f;
     public float yPos = 0.0f;
     public float speed = 100.0f;
+    public float hp = 100.0f;
+    public int strength = 10;
     public boolean isMoving = false;
     public int lastDirection = Input.Keys.DOWN;
     Rectangle playerRectangle;
@@ -28,6 +30,7 @@ public class Player extends InputAdapter {
     public float frameDuration = 0.2f;
 
     Asset table;
+    Goblin goblin;
 
     public Player(TextureAtlas atlas, Weapon sword) {
 
@@ -35,10 +38,10 @@ public class Player extends InputAdapter {
         playerSprite.setSize(heroWidth, heroHeight);
         playerRectangle = new Rectangle(xPos, yPos, heroWidth, heroHeight);
         this.sword = sword;
-        this.table = table;
 
-        weapons = new ArrayList<Weapon>();
+        weapons = new ArrayList<>();
         table = new Asset(atlas);
+        goblin = new Goblin(atlas);
     }
 
     public void draw(SpriteBatch spriteBatch) {
@@ -47,6 +50,36 @@ public class Player extends InputAdapter {
 
     public void updateRectangle() {
         playerRectangle.setPosition(xPos, yPos);
+    }
+
+    public void battle(Player player, Goblin goblin) {
+
+        char attackTurn = 'p';
+        while (player.hp > 0 && goblin.hp > 0) {
+            if (attackTurn == 'p') {
+                System.out.println("player attacks goblin");
+                goblin.hp -= player.strength;
+                System.out.println("goblin hp remaining: " + goblin.hp);
+
+                    if (goblin.hp <= 0) {
+                        System.out.println("goblin died.");
+                        goblin.hp = 0;
+                        break;
+                    }
+                    attackTurn = 'g';
+            } else {
+                    System.out.println("goblin attacks player");
+                    player.hp -= goblin.strength;
+                System.out.println("player hp remaining: " + player.hp);
+
+                    if (player.hp <= 0) {
+                        System.out.println("player died.");
+                        player.hp = 0;
+                        break;
+                    }
+                attackTurn = 'p';
+            }
+        }
     }
 
     public void checkCollision() {
@@ -88,6 +121,10 @@ public class Player extends InputAdapter {
                         break;
                 }
             }
+        }
+
+        if (!collisionDetected && playerRectangle.overlaps(goblin.goblinRectangle)) {
+            battle(this, goblin);
         }
     }
 

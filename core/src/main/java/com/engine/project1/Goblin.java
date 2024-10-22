@@ -12,6 +12,8 @@ public class Goblin {
     public int goblinHeight = 64;
     public int xPos = Main.WIDTH - goblinWidth;
     public int yPos = Main.HEIGHT - goblinHeight;
+    public float hp = 50.0f;
+    public int strength = 5;
     public Rectangle goblinRectangle;
 
     public Goblin(TextureAtlas atlas) {
