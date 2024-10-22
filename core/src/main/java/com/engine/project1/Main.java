@@ -19,6 +19,8 @@ public class Main extends ApplicationAdapter {
     public TextureAtlas atlas;
     public Player hero;
     public Goblin goblinOne;
+    public Asset table;
+    public Asset bed;
     float deltaTime;
     public ShapeRenderer shapeRenderer;
     public Weapon sword;
@@ -33,6 +35,8 @@ public class Main extends ApplicationAdapter {
         sword = new Weapon(atlas);
         hero = new Player(atlas, sword);
         goblinOne = new Goblin(atlas);
+        table = new Asset(atlas);
+        bed = new Asset(atlas);
         shapeRenderer = new ShapeRenderer();
 
     }
@@ -48,10 +52,12 @@ public class Main extends ApplicationAdapter {
 
         hero.checkSprite(atlas);
         hero.inputHandling(deltaTime, atlas);
+        table.draw(spriteBatch);
+        bed.draw(spriteBatch);
+        goblinOne.draw(spriteBatch);
         hero.draw(spriteBatch);
         sword.draw(spriteBatch);
 
-        goblinOne.draw(spriteBatch);
 
 
         spriteBatch.end();
