@@ -68,11 +68,13 @@ public class Main extends ApplicationAdapter {
         hero.updateRectangle();
         sword.updateRectangle();
         goblinOne.updateRectangle();
+        table.updateRectangle();
 
 
         shapeRenderer.rect(sword.xPos, sword.yPos, sword.swordSize, sword.swordSize);
         shapeRenderer.rect(hero.playerRectangle.x, hero.playerRectangle.y, hero.playerRectangle.width, hero.playerRectangle.height);
         shapeRenderer.rect(goblinOne.xPos, goblinOne.yPos, goblinOne.goblinWidth, goblinOne.goblinHeight);
+        shapeRenderer.rect(table.tableX, table.tableY, table.tableWidth, table.tableHeight);
         shapeRenderer.end();
     }
 

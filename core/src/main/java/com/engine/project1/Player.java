@@ -27,14 +27,18 @@ public class Player extends InputAdapter {
     public float animationTimer = 0.0f;
     public float frameDuration = 0.2f;
 
+    Asset table;
+
     public Player(TextureAtlas atlas, Weapon sword) {
 
         playerSprite = new Sprite(atlas.findRegion("hero"));
         playerSprite.setSize(heroWidth, heroHeight);
         playerRectangle = new Rectangle(xPos, yPos, heroWidth, heroHeight);
         this.sword = sword;
+        this.table = table;
 
         weapons = new ArrayList<Weapon>();
+        table = new Asset(atlas);
     }
 
     public void draw(SpriteBatch spriteBatch) {
@@ -49,6 +53,7 @@ public class Player extends InputAdapter {
 
         updateRectangle();
         sword.updateRectangle();
+        table.updateRectangle();
 
         if (yPos > Main.HEIGHT - heroHeight) {
             yPos = Main.HEIGHT - heroHeight;
@@ -61,25 +66,25 @@ public class Player extends InputAdapter {
             xPos = Main.WIDTH - heroWidth;
         }
 
-        if (!collisionDetected && playerRectangle.overlaps(sword.swordRectangle)) {
+        if (!collisionDetected && playerRectangle.overlaps(table.tableRectangle)) {
             System.out.println("collision detected");
             sword.swordSprite.setAlpha(0);
 
             weapons.add(sword);
 
-            if (xPos + sword.swordSize > sword.xPos && Math.abs(yPos - sword.yPos) < sword.swordSize) {
+            if (xPos + table.tableWidth > table.tableX && Math.abs(yPos - table.tableY) < table.tableHeight) {
                 switch (lastDirection) {
                     case Input.Keys.UP:
-                        yPos = sword.yPos + heroHeight;
+                        yPos = table.tableY + (heroHeight * 2);
                         break;
                     case Input.Keys.DOWN:
-                        yPos = sword.yPos - heroHeight;
+                        yPos = table.tableY - heroHeight;
                         break;
                     case Input.Keys.LEFT:
-                        xPos = sword.xPos - heroWidth;
+                        xPos = table.tableX - heroWidth;
                         break;
                     case Input.Keys.RIGHT:
-                        xPos = sword.xPos + heroWidth;
+                        xPos = table.tableX + (heroWidth * 2);
                         break;
                 }
             }
