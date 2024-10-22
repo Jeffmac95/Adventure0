@@ -15,8 +15,8 @@ public class Player extends InputAdapter {
     public Sprite playerSprite;
     public int heroWidth = 64;
     public int heroHeight = 64;
-    public float xPos = 0;
-    public float yPos = 0;
+    public float xPos = 0.0f;
+    public float yPos = 0.0f;
     public float speed = 100.0f;
     public boolean isMoving = false;
     public int lastDirection = Input.Keys.DOWN;

@@ -17,7 +17,9 @@ public class Goblin {
     public Goblin(TextureAtlas atlas) {
         goblinSprite = new Sprite(atlas.findRegion("goblin"));
         goblinRectangle = new Rectangle(xPos, yPos, goblinWidth, goblinHeight);
-        goblinSprite.setSize(goblinWidth, goblinHeight);}
+        goblinSprite.setSize(goblinWidth, goblinHeight);
+        goblinSprite.setPosition(xPos, yPos);
+    }
 
     public void draw(SpriteBatch spriteBatch) {
         goblinSprite.draw(spriteBatch);

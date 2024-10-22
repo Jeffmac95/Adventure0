@@ -1,4 +1,4 @@
-name=game_atlas_new
+name=game_atlas_newnew
 filename=
 output=.
 
@@ -34,7 +34,7 @@ prettyPrint=false
 legacyOutput=false
 
 scaleFactors=[{suffix:"",factor:1,resampling:bicubic}]
-inputFiles=[{path:../hero_walking_left_with_sword.png,type:Input,regionName:null},{path:../hero_walking_right.png,type:Input,regionName:null},{path:../hero_walking_right_foot.png,type:Input,regionName:null},{path:../hero_walking_right_with_sword.png,type:Input,regionName:null},{path:../hero_with_sword.png,type:Input,regionName:null},{path:../sword.png,type:Input,regionName:null},{path:../hero_with_sword_walking_left_foot.png,type:Input,regionName:null},{path:../hero_with_sword_walking_right_foot.png,type:Input,regionName:null},{path:../hero.png,type:Input,regionName:null},{path:../hero_backwards.png,type:Input,regionName:null},{path:../hero_backwards_walking_left.png,type:Input,regionName:null},{path:../hero_backwards_walking_right.png,type:Input,regionName:null},{path:../hero_facing_left.png,type:Input,regionName:null},{path:../hero_facing_left_with_sword.png,type:Input,regionName:null},{path:../hero_facing_right.png,type:Input,regionName:null},{path:../hero_facing_right_with_sword.png,type:Input,regionName:null},{path:../hero_walking_left.png,type:Input,regionName:null},{path:../hero_walking_left_foot.png,type:Input,regionName:null},{path:../goblin_walking_left.png,type:Input,regionName:null},{path:../goblin_walking_right.png,type:Input,regionName:null},{path:../goblic_opposite.png,type:Input,regionName:null},{path:../goblin.png,type:Input,regionName:null}]
+inputFiles=[{path:../hero_facing_left.png,type:Input,regionName:null},{path:../hero_facing_left_with_sword.png,type:Input,regionName:null},{path:../hero_facing_right.png,type:Input,regionName:null},{path:../hero_facing_right_with_sword.png,type:Input,regionName:null},{path:../hero_walking_left.png,type:Input,regionName:null},{path:../hero_walking_left_foot.png,type:Input,regionName:null},{path:../hero_walking_left_with_sword.png,type:Input,regionName:null},{path:../hero_walking_right.png,type:Input,regionName:null},{path:../hero_walking_right_foot.png,type:Input,regionName:null},{path:../hero_walking_right_with_sword.png,type:Input,regionName:null},{path:../hero_with_sword.png,type:Input,regionName:null},{path:../hero_with_sword_walking_left_foot.png,type:Input,regionName:null},{path:../hero_with_sword_walking_right_foot.png,type:Input,regionName:null},{path:../goblic_opposite.png,type:Input,regionName:null},{path:../goblin.png,type:Input,regionName:null},{path:../goblin_walking_left.png,type:Input,regionName:null},{path:../goblin_walking_right.png,type:Input,regionName:null},{path:../hero.png,type:Input,regionName:null},{path:../hero_backwards.png,type:Input,regionName:null},{path:../hero_backwards_walking_left.png,type:Input,regionName:null},{path:../hero_backwards_walking_right.png,type:Input,regionName:null}]
 keepInputFileExtensions=false
 
 

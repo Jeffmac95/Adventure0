@@ -16,13 +16,11 @@ public class Main extends ApplicationAdapter {
     public static final int WIDTH = 640;
     public static final int HEIGHT = 480;
     public SpriteBatch spriteBatch;
+    public TextureAtlas atlas;
     public Player hero;
     //public Goblin goblinOne;
-    public TextureAtlas atlas;
     float deltaTime;
-
     public ShapeRenderer shapeRenderer;
-
     public Weapon sword;
 
 
@@ -30,12 +28,13 @@ public class Main extends ApplicationAdapter {
     public void create() {
 
 
-        atlas = new TextureAtlas(Gdx.files.internal("atlas/game_atlas_new.atlas"));
+        atlas = new TextureAtlas(Gdx.files.internal("Atlas/game_atlas_new.atlas"));
         spriteBatch = new SpriteBatch();
         sword = new Weapon(atlas);
         hero = new Player(atlas, sword);
         //goblinOne = new Goblin(atlas);
         shapeRenderer = new ShapeRenderer();
+
     }
 
     @Override
@@ -45,11 +44,15 @@ public class Main extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         spriteBatch.begin();
+
         hero.checkSprite(atlas);
         hero.inputHandling(deltaTime, atlas);
         hero.draw(spriteBatch);
         sword.draw(spriteBatch);
+
         //goblinOne.draw(spriteBatch);
+        //goblinOne.updateRectangle();
+
 
         spriteBatch.end();
 
@@ -58,6 +61,7 @@ public class Main extends ApplicationAdapter {
 
         hero.updateRectangle();
         sword.updateRectangle();
+
 
         shapeRenderer.rect(sword.xPos, sword.yPos, sword.swordSize, sword.swordSize);
         shapeRenderer.rect(hero.playerRectangle.x, hero.playerRectangle.y, hero.playerRectangle.width, hero.playerRectangle.height);
