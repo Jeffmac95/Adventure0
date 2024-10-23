@@ -29,6 +29,8 @@ hero_facing_right
 bounds:530,66,64,64
 hero_facing_right_with_sword
 bounds:264,132,64,64
+hero_fighting
+bounds:728,66,64,64
 hero_walking_left
 bounds:464,66,64,64
 hero_walking_left_foot

@@ -54,13 +54,15 @@ public class Main extends ApplicationAdapter {
     @Override
     public void render() {
 
-        deltaTime = Gdx.graphics.getDeltaTime();
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0.54f, 0.54f, 0.54f, 1.0f);
+
+        deltaTime = Gdx.graphics.getDeltaTime();
 
         spriteBatch.setProjectionMatrix(camera.combined);
 
         spriteBatch.begin();
+
         spriteBatch.draw(texture, 0, 0);
 
         hero.checkSprite(atlas);
@@ -70,10 +72,11 @@ public class Main extends ApplicationAdapter {
         goblinOne.draw(spriteBatch);
         hero.draw(spriteBatch);
         sword.draw(spriteBatch);
-
+        hero.checkCollision(deltaTime, atlas);
 
 
         spriteBatch.end();
+
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         shapeRenderer.setColor(1.0f, 0.0f, 0.0f, 1);
@@ -82,8 +85,6 @@ public class Main extends ApplicationAdapter {
         sword.updateRectangle();
         table.updateRectangle();
         goblinOne.updateRectangle();
-
-
 
         shapeRenderer.rect(sword.xPos, sword.yPos, sword.swordSize, sword.swordSize);
         shapeRenderer.rect(hero.playerRectangle.x, hero.playerRectangle.y, hero.playerRectangle.width, hero.playerRectangle.height);
@@ -102,8 +103,8 @@ public class Main extends ApplicationAdapter {
     @Override
     public void resize(int width, int height) {
         spriteBatch.getProjectionMatrix().setToOrtho2D(hero.xPos, hero.yPos, width, height);
-        camera.viewportWidth = viewportWidth;
-        camera.viewportHeight = viewportHeight;
+        camera.viewportWidth = width;
+        camera.viewportHeight = height;
         camera.update();
     }
 }

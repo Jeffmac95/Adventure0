@@ -80,14 +80,14 @@ public class Player extends InputAdapter {
                 attackTurn = 'p';
             }
         }
-            goblin.goblinSprite.setPosition(-1000, -1000);
     }
 
-    public void checkCollision() {
+    public void checkCollision(float deltaTime, TextureAtlas atlas) {
 
         updateRectangle();
         sword.updateRectangle();
         table.updateRectangle();
+        goblin.updateRectangle();
 
         if (yPos > Main.HEIGHT - heroHeight) {
             yPos = Main.HEIGHT - heroHeight;
@@ -125,7 +125,21 @@ public class Player extends InputAdapter {
         }
 
         if (!collisionDetected && playerRectangle.overlaps(goblin.goblinRectangle)) {
+            collisionDetected = true;
+            animationTimer += deltaTime;
+
             battle(this, goblin);
+
+            if (animationTimer > frameDuration) {
+                playerSprite.setRegion(atlas.findRegion("hero_fighting"));
+            } else {
+                playerSprite.setRegion(atlas.findRegion("hero_facing_right_with_sword"));
+            }
+            if (animationTimer > frameDuration * 2) {
+                animationTimer = 0.0f;
+            }
+        } else {
+            collisionDetected = false;
         }
     }
 
@@ -221,7 +235,7 @@ public class Player extends InputAdapter {
         }
 
         checkSprite(atlas);
-        checkCollision();
+        checkCollision(deltaTime, atlas);
         playerSprite.setPosition(xPos, yPos);
     }
 
