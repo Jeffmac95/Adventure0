@@ -19,7 +19,7 @@ public class Player extends InputAdapter {
     public float yPos = 0.0f;
     public float speed = 100.0f;
     public float hp = 100.0f;
-    public int strength = 10;
+    public int strength = 7;
     public boolean isMoving = false;
     public int lastDirection = Input.Keys.DOWN;
     Rectangle playerRectangle;
@@ -80,6 +80,7 @@ public class Player extends InputAdapter {
                 attackTurn = 'p';
             }
         }
+            goblin.goblinSprite.setPosition(-1000, -1000);
     }
 
     public void checkCollision() {

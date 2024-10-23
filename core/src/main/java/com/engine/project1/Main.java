@@ -3,6 +3,7 @@ package com.engine.project1;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,10 +26,13 @@ public class Main extends ApplicationAdapter {
     public ShapeRenderer shapeRenderer;
     public Weapon sword;
 
+    public OrthographicCamera camera;
+    public float viewportWidth = 640f;
+    public float viewportHeight = 480f;
+    public Texture texture;
 
     @Override
     public void create() {
-
 
         atlas = new TextureAtlas(Gdx.files.internal("Atlas/game_atlas_newnew.atlas"));
         spriteBatch = new SpriteBatch();
@@ -39,7 +43,13 @@ public class Main extends ApplicationAdapter {
         bed = new Asset(atlas);
         shapeRenderer = new ShapeRenderer();
 
+
+        camera = new OrthographicCamera(WIDTH, HEIGHT);
+        camera.position.set(WIDTH / 2, HEIGHT / 2, 0);
+        camera.update();
+        texture = new Texture("texturetwo.png");
     }
+
 
     @Override
     public void render() {
@@ -48,7 +58,10 @@ public class Main extends ApplicationAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0.54f, 0.54f, 0.54f, 1.0f);
 
+        spriteBatch.setProjectionMatrix(camera.combined);
+
         spriteBatch.begin();
+        spriteBatch.draw(texture, 0, 0);
 
         hero.checkSprite(atlas);
         hero.inputHandling(deltaTime, atlas);
@@ -67,8 +80,9 @@ public class Main extends ApplicationAdapter {
 
         hero.updateRectangle();
         sword.updateRectangle();
-        goblinOne.updateRectangle();
         table.updateRectangle();
+        goblinOne.updateRectangle();
+
 
 
         shapeRenderer.rect(sword.xPos, sword.yPos, sword.swordSize, sword.swordSize);
@@ -88,5 +102,8 @@ public class Main extends ApplicationAdapter {
     @Override
     public void resize(int width, int height) {
         spriteBatch.getProjectionMatrix().setToOrtho2D(hero.xPos, hero.yPos, width, height);
+        camera.viewportWidth = viewportWidth;
+        camera.viewportHeight = viewportHeight;
+        camera.update();
     }
 }
