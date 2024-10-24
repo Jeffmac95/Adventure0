@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Rectangle;
 public class Asset {
     public Sprite tableSprite;
     public Sprite bedSprite;
-    public int tableX = Main.WIDTH / 2;
-    public int tableY = Main.HEIGHT /2;
+    public int tableX = Main.SCREEN_WIDTH / 2;
+    public int tableY = Main.SCREEN_HEIGHT /2;
     public int tableWidth = 128;
     public int tableHeight = 100;
     public Rectangle tableRectangle;

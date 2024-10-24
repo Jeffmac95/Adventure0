@@ -9,8 +9,8 @@ public class Weapon {
 
     public Sprite swordSprite;
     public int swordSize = 64;
-    public int xPos = Main.WIDTH / 2;
-    public int yPos = Main.HEIGHT / 2;
+    public int xPos = Main.SCREEN_WIDTH / 2;
+    public int yPos = Main.SCREEN_HEIGHT / 2;
     public Rectangle swordRectangle;
 
     public Weapon(TextureAtlas atlas) {

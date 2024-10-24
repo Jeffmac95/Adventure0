@@ -10,8 +10,8 @@ public class Goblin {
     public Sprite goblinSprite;
     public int goblinWidth = 64;
     public int goblinHeight = 64;
-    public int xPos = Main.WIDTH - goblinWidth;
-    public int yPos = Main.HEIGHT - goblinHeight;
+    public int xPos = Main.SCREEN_WIDTH - goblinWidth;
+    public int yPos = Main.SCREEN_HEIGHT - goblinHeight;
     public float hp = 50.0f;
     public int strength = 5;
     public Rectangle goblinRectangle;

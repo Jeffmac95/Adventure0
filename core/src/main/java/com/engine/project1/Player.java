@@ -90,15 +90,15 @@ public class Player extends InputAdapter {
         table.updateRectangle();
         goblin.updateRectangle();
 
-        if (yPos > Main.HEIGHT - heroHeight) {
-            yPos = Main.HEIGHT - heroHeight;
+        if (yPos > Main.SCREEN_HEIGHT - heroHeight) {
+            yPos = Main.SCREEN_HEIGHT - heroHeight;
         } else if (yPos < 0) {
             yPos = 0;
         }
         if (xPos < 0) {
             xPos = 0;
-        } else if (xPos > Main.WIDTH - heroWidth) {
-            xPos = Main.WIDTH - heroWidth;
+        } else if (xPos > Main.SCREEN_WIDTH - heroWidth) {
+            xPos = Main.SCREEN_WIDTH - heroWidth;
         }
 
         if (!collisionDetected && playerRectangle.overlaps(table.tableRectangle)) {

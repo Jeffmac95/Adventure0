@@ -5,17 +5,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import org.w3c.dom.Text;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
 
-    public static final int WIDTH = 640;
-    public static final int HEIGHT = 480;
+    public static final int SCREEN_WIDTH = 640;
+    public static final int SCREEN_HEIGHT = 480;
     public SpriteBatch spriteBatch;
     public TextureAtlas atlas;
     public Player hero;
@@ -31,6 +36,13 @@ public class Main extends ApplicationAdapter {
     public float viewportHeight = 480f;
     public Texture texture;
 
+    public Stage stage;
+    public Table stageTable;
+
+    public Skin skin;
+
+    public boolean isDrawing = false;
+
     @Override
     public void create() {
 
@@ -44,10 +56,32 @@ public class Main extends ApplicationAdapter {
         shapeRenderer = new ShapeRenderer();
 
 
-        camera = new OrthographicCamera(WIDTH, HEIGHT);
-        camera.position.set(WIDTH / 2, HEIGHT / 2, 0);
+        camera = new OrthographicCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
+        camera.position.set(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0);
         camera.update();
         texture = new Texture("texturetwo.png");
+
+        skin = new Skin(Gdx.files.internal("ui/buttonStyle.json"));
+
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+        stageTable = new Table();
+        stageTable.top().left();
+        stageTable.setFillParent(true);
+        stage.addActor(stageTable);
+        stageTable.setDebug(true);
+
+        Button button = new Button(skin);
+
+        stageTable.add(button).width(100).height(50);
+
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+
+                isDrawing = !isDrawing;
+            }
+        });
     }
 
 
@@ -83,23 +117,31 @@ public class Main extends ApplicationAdapter {
         table.updateRectangle();
         goblinOne.updateRectangle();
 
-
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(1.0f, 0.0f, 0.0f, 1);
-
+        stage.act(deltaTime);
+        stage.draw();
 
 
-        shapeRenderer.rect(sword.xPos, sword.yPos, sword.swordSize, sword.swordSize);
-        shapeRenderer.rect(hero.playerRectangle.x, hero.playerRectangle.y, hero.playerRectangle.width, hero.playerRectangle.height);
-        shapeRenderer.rect(goblinOne.xPos, goblinOne.yPos, goblinOne.goblinWidth, goblinOne.goblinHeight);
-        shapeRenderer.rect(table.tableX, table.tableY, table.tableWidth, table.tableHeight);
-        shapeRenderer.end();
+
+        if (isDrawing) {
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+
+            shapeRenderer.setColor(1.0f, 0.0f, 0.0f, 1);
+            shapeRenderer.rect(sword.xPos, sword.yPos, sword.swordSize, sword.swordSize);
+            shapeRenderer.rect(hero.playerRectangle.x, hero.playerRectangle.y, hero.playerRectangle.width, hero.playerRectangle.height);
+            shapeRenderer.rect(goblinOne.xPos, goblinOne.yPos, goblinOne.goblinWidth, goblinOne.goblinHeight);
+            shapeRenderer.rect(table.tableX, table.tableY, table.tableWidth, table.tableHeight);
+            shapeRenderer.end();
+
+        }
+
+
     }
 
     @Override
     public void dispose() {
         spriteBatch.dispose();
         atlas.dispose();
+        stage.dispose();
         Player.weapons.clear();
     }
 
@@ -109,5 +151,6 @@ public class Main extends ApplicationAdapter {
         camera.viewportWidth = viewportWidth;
         camera.viewportHeight = viewportHeight;
         camera.update();
+        stage.getViewport().update(width, height, true);
     }
 }
