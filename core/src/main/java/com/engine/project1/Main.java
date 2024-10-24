@@ -19,8 +19,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends ApplicationAdapter {
 
-    public static final int SCREEN_WIDTH = 640;
-    public static final int SCREEN_HEIGHT = 480;
+    public static final float SCREEN_WIDTH = 640;
+    public static final float SCREEN_HEIGHT = 480;
     public SpriteBatch spriteBatch;
     public TextureAtlas atlas;
     public Player hero;
@@ -39,7 +39,8 @@ public class Main extends ApplicationAdapter {
     public Stage stage;
     public Table stageTable;
 
-    public Skin skin;
+    public Skin debugButtonSkin;
+    public Skin invButtonSkin;
 
     public boolean isDrawing = false;
 
@@ -61,7 +62,8 @@ public class Main extends ApplicationAdapter {
         camera.update();
         texture = new Texture("texturetwo.png");
 
-        skin = new Skin(Gdx.files.internal("ui/buttonStyle.json"));
+        debugButtonSkin = new Skin(Gdx.files.internal("ui/buttonStyle.json"));
+        invButtonSkin = new Skin(Gdx.files.internal("ui/invButtonStyle.json"));
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -71,11 +73,13 @@ public class Main extends ApplicationAdapter {
         stage.addActor(stageTable);
         stageTable.setDebug(true);
 
-        Button button = new Button(skin);
+        Button debugButton = new Button(debugButtonSkin);
+        Button invButton = new Button(invButtonSkin);
 
-        stageTable.add(button).width(100).height(50);
+        stageTable.add(debugButton).width(100).height(50);
+        stageTable.add(invButton).width(75).height(50);
 
-        button.addListener(new ChangeListener() {
+        debugButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
 

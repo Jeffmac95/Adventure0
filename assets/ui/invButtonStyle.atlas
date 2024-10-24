@@ -1,9 +1,10 @@
 
-buttonStyle.png
+invButtonStyle.png
 size: 128, 128
 format: RGBA8888
+filter: Linear, Linear
 repeat: none
-debug_not_pressed
+backpack_closed
   rotate: false
   xy: 1, 35
   size: 32, 32
@@ -11,7 +12,7 @@ debug_not_pressed
   orig: 32, 32
   offset: 0, 0
   index: -1
-debug_pressed
+backpack_open
   rotate: false
   xy: 1, 1
   size: 32, 32
