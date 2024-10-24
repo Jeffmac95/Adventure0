@@ -50,6 +50,7 @@ public class Player extends InputAdapter {
 
     public void updateRectangle() {
         playerRectangle.setPosition(xPos, yPos);
+        playerRectangle.setPosition(xPos, yPos);
     }
 
     public void battle(Player player, Goblin goblin) {

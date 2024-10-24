@@ -29,5 +29,6 @@ public class Goblin {
 
     public void updateRectangle() {
         goblinSprite.setPosition(xPos, yPos);
+        goblinRectangle.setPosition(xPos, yPos);
     }
 }
