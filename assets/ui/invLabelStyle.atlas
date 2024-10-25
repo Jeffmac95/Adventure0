@@ -1,0 +1,13 @@
+
+invLabelStyle.png
+size: 1024, 1024
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+textureone
+  rotate: false
+  xy: 1, 219
+  size: 680, 460
+  orig: 680, 460
+  offset: 0, 0
+  index: -1

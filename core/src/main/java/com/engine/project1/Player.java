@@ -107,6 +107,7 @@ public class Player extends InputAdapter {
 
             weapons.add(sword);
 
+
             if (xPos + table.tableWidth > table.tableX && Math.abs(yPos - table.tableY) < table.tableHeight) {
                 switch (lastDirection) {
                     case Input.Keys.UP:

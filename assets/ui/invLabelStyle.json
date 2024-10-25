@@ -1,0 +1,22 @@
+{
+"com.badlogic.gdx.graphics.Color": {
+	"RGBA_255_255_0_255": {
+		"r": 1,
+		"g": 1,
+		"b": 0,
+		"a": 1
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+	"default": {
+		"font": "aerial",
+		"fontColor": "RGBA_255_255_0_255",
+		"background": "textureone"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {
+  "default": {
+    "label": "default"
+  }
+}
+}

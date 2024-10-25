@@ -12,6 +12,7 @@ public class Weapon {
     public float xPos = Main.SCREEN_WIDTH / 2;
     public float yPos = Main.SCREEN_HEIGHT / 2 + (swordSize / 2);
     public Rectangle swordRectangle;
+    public String sword = "Sword";
 
     public Weapon(TextureAtlas atlas) {
         swordSprite = new Sprite(atlas.findRegion("sword"));
@@ -27,4 +28,10 @@ public class Weapon {
     public void updateRectangle() {
         swordRectangle.setPosition(xPos, yPos);
     }
+
+    @Override
+    public String toString() {
+        return "Weapon: " + this.sword;
+    }
+
 }
