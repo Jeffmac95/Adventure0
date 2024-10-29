@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 
@@ -31,6 +32,7 @@ public class Player extends InputAdapter {
 
     Asset table;
     Goblin goblin;
+
 
     public Player(TextureAtlas atlas, Weapon sword) {
 
@@ -71,7 +73,7 @@ public class Player extends InputAdapter {
             } else {
                     System.out.println("goblin attacks player");
                     player.hp -= goblin.strength;
-                System.out.println("player hp remaining: " + player.hp);
+                    System.out.println("player hp remaining: " + player.hp);
 
                     if (player.hp <= 0) {
                         System.out.println("player died.");
@@ -82,6 +84,7 @@ public class Player extends InputAdapter {
             }
         }
     }
+
 
     public void checkCollision(float deltaTime, TextureAtlas atlas) {
 
@@ -127,10 +130,11 @@ public class Player extends InputAdapter {
         }
 
         if (!collisionDetected && playerRectangle.overlaps(goblin.goblinRectangle)) {
-            collisionDetected = true;
-            animationTimer += deltaTime;
+                collisionDetected = true;
+                animationTimer += deltaTime;
+                battle(this, goblin);
+                goblin.goblinSprite.setAlpha(0);
 
-            battle(this, goblin);
 
             if (animationTimer > frameDuration) {
                 playerSprite.setRegion(atlas.findRegion("hero_fighting"));

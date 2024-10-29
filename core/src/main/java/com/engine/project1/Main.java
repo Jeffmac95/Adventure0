@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -33,22 +34,17 @@ public class Main extends ApplicationAdapter {
     float deltaTime;
     public ShapeRenderer shapeRenderer;
     public Weapon sword;
-
     public OrthographicCamera camera;
     public float viewportWidth = 640f;
     public float viewportHeight = 480f;
     public Texture texture;
-
     public Stage stage;
     public Table stageTable;
-
     public Skin debugButtonSkin;
     public Skin invButtonSkin;
-
     public boolean isDrawing = false;
-
+    public boolean isInvOpen = false;
     public BitmapFont font;
-
     public Skin labelSkin;
 
     @Override
@@ -63,17 +59,13 @@ public class Main extends ApplicationAdapter {
         bed = new Asset(atlas);
         shapeRenderer = new ShapeRenderer();
         font = new BitmapFont(Gdx.files.internal("Fonts/my_font.fnt"));
-
-
         camera = new OrthographicCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
         camera.position.set(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0);
         camera.update();
         texture = new Texture("texturetwo.png");
-
         debugButtonSkin = new Skin(Gdx.files.internal("ui/buttonStyle.json"));
         invButtonSkin = new Skin(Gdx.files.internal("ui/invButtonStyle.json"));
         labelSkin = new Skin(Gdx.files.internal("Fonts/labelStyle.json"));
-
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         stageTable = new Table();
@@ -81,20 +73,30 @@ public class Main extends ApplicationAdapter {
         stageTable.setFillParent(true);
         stage.addActor(stageTable);
         stageTable.setDebug(true);
-
         Button debugButton = new Button(debugButtonSkin);
         Button invButton = new Button(invButtonSkin);
-        Label label = new Label("TEST", labelSkin);
+        Label label = new Label("", labelSkin);
         label.setAlignment(Align.center);
-
+        label.setVisible(false);
         stageTable.add(debugButton).width(100).height(50);
         stageTable.add(invButton).width(75).height(50);
         stageTable.add(label).width(200).height(75);
+        //label.setText(sword.toString());
 
         debugButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 isDrawing = !isDrawing;
+            }
+        });
+        invButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent changeEvent, Actor actor) {
+                isInvOpen = !isInvOpen;
+                label.setVisible(isInvOpen);
+                if (isInvOpen) {
+                    label.setText(sword.toString());
+                }
             }
         });
     }
@@ -105,8 +107,6 @@ public class Main extends ApplicationAdapter {
 
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1.0f);
-
-
 
         deltaTime = Gdx.graphics.getDeltaTime();
 
@@ -139,8 +139,8 @@ public class Main extends ApplicationAdapter {
 
 
         if (isDrawing) {
-            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
 
+            shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(1.0f, 0.0f, 0.0f, 1);
             shapeRenderer.rect(sword.xPos, sword.yPos, sword.swordSize, sword.swordSize);
             shapeRenderer.rect(hero.playerRectangle.x, hero.playerRectangle.y, hero.playerRectangle.width, hero.playerRectangle.height);
@@ -163,7 +163,6 @@ public class Main extends ApplicationAdapter {
 
     @Override
     public void resize(int width, int height) {
-        spriteBatch.getProjectionMatrix().setToOrtho2D(hero.xPos, hero.yPos, width, height);
         camera.viewportWidth = viewportWidth;
         camera.viewportHeight = viewportHeight;
         camera.update();
