@@ -29,20 +29,15 @@ public class Main extends ApplicationAdapter {
     public Asset table;
     public Asset bed;
     float deltaTime;
+    public MyTable myTable;
     public ShapeRenderer shapeRenderer;
     public Weapon sword;
     public OrthographicCamera camera;
     public float viewportWidth = 640f;
     public float viewportHeight = 480f;
     public Texture texture;
-    public Stage stage;
-    public Table stageTable;
-    public Skin debugButtonSkin;
-    public Skin invButtonSkin;
-    public boolean isDrawing = false;
-    public boolean isInvOpen = false;
     public BitmapFont font;
-    public Skin labelSkin;
+
 
     @Override
     public void create() {
@@ -60,41 +55,7 @@ public class Main extends ApplicationAdapter {
         camera.position.set(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0);
         camera.update();
         texture = new Texture("texturetwo.png");
-        debugButtonSkin = new Skin(Gdx.files.internal("ui/buttonStyle.json"));
-        invButtonSkin = new Skin(Gdx.files.internal("ui/invButtonStyle.json"));
-        labelSkin = new Skin(Gdx.files.internal("Fonts/labelStyle.json"));
-        stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
-        stageTable = new Table();
-        stageTable.top().left();
-        stageTable.setFillParent(true);
-        stage.addActor(stageTable);
-        stageTable.setDebug(true);
-        Button debugButton = new Button(debugButtonSkin);
-        Button invButton = new Button(invButtonSkin);
-        Label label = new Label("", labelSkin);
-        label.setAlignment(Align.center);
-        label.setVisible(false);
-        stageTable.add(debugButton).width(100).height(50);
-        stageTable.add(invButton).width(75).height(50);
-        stageTable.add(label).width(225).height(75);
-
-        debugButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                isDrawing = !isDrawing;
-            }
-        });
-        invButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent changeEvent, Actor actor) {
-                isInvOpen = !isInvOpen;
-                label.setVisible(isInvOpen);
-                if (isInvOpen) {
-                    label.setText(sword.toString());
-                }
-            }
-        });
+        myTable = new MyTable(atlas);
     }
 
 
@@ -130,12 +91,12 @@ public class Main extends ApplicationAdapter {
         table.updateRectangle();
         goblinOne.updateRectangle();
 
-        stage.act(deltaTime);
-        stage.draw();
+        myTable.stage.act(deltaTime);
+        myTable.stage.draw();
 
 
 
-        if (isDrawing) {
+        if (myTable.isDrawing) {
 
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(1.0f, 0.0f, 0.0f, 1);
@@ -154,7 +115,7 @@ public class Main extends ApplicationAdapter {
     public void dispose() {
         spriteBatch.dispose();
         atlas.dispose();
-        stage.dispose();
+        myTable.stage.dispose();
         font.dispose();
         shapeRenderer.dispose();
         Player.weapons.clear();
@@ -165,6 +126,6 @@ public class Main extends ApplicationAdapter {
         camera.viewportWidth = viewportWidth;
         camera.viewportHeight = viewportHeight;
         camera.update();
-        stage.getViewport().update(width, height, true);
+        myTable.stage.getViewport().update(width, height, true);
     }
 }
