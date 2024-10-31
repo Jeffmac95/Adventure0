@@ -1,5 +1,7 @@
 package com.engine.project1;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -17,6 +19,7 @@ public class Goblin {
     public int strength = 5;
     public Rectangle goblinRectangle;
     public Rectangle deadGoblinRectangle;
+    public boolean isAlive = true;
 
 
     public Goblin(TextureAtlas atlas) {
@@ -31,7 +34,7 @@ public class Goblin {
     }
 
     public void draw(SpriteBatch spriteBatch) {
-        if (!isAlive()) {
+        if (!isAlive) {
             deadGoblinSprite.draw(spriteBatch);
         } else {
             goblinSprite.draw(spriteBatch);
@@ -39,7 +42,7 @@ public class Goblin {
     }
 
     public void updateRectangle() {
-        if (!isAlive()) {
+        if (!isAlive) {
             goblinSprite.setPosition(xPos, yPos);
             goblinRectangle.setPosition(xPos, yPos);
 
@@ -47,9 +50,5 @@ public class Goblin {
             deadGoblinSprite.setPosition(xPos, yPos);
             deadGoblinRectangle.setPosition(xPos, yPos);
         }
-    }
-
-    public boolean isAlive() {
-        return hp > 0;
     }
 }

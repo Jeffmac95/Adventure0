@@ -5,10 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -80,8 +77,7 @@ public class Main extends ApplicationAdapter {
         label.setVisible(false);
         stageTable.add(debugButton).width(100).height(50);
         stageTable.add(invButton).width(75).height(50);
-        stageTable.add(label).width(200).height(75);
-        //label.setText(sword.toString());
+        stageTable.add(label).width(225).height(75);
 
         debugButton.addListener(new ChangeListener() {
             @Override
@@ -109,6 +105,7 @@ public class Main extends ApplicationAdapter {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1.0f);
 
         deltaTime = Gdx.graphics.getDeltaTime();
+
 
         spriteBatch.setProjectionMatrix(camera.combined);
 
@@ -158,6 +155,8 @@ public class Main extends ApplicationAdapter {
         spriteBatch.dispose();
         atlas.dispose();
         stage.dispose();
+        font.dispose();
+        shapeRenderer.dispose();
         Player.weapons.clear();
     }
 

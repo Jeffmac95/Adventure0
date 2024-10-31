@@ -67,6 +67,7 @@ public class Player extends InputAdapter {
                     if (goblin.hp <= 0) {
                         System.out.println("goblin died.");
                         goblin.hp = 0;
+                        goblin.isAlive = false;
                         break;
                     }
                     attackTurn = 'g';
@@ -113,16 +114,16 @@ public class Player extends InputAdapter {
 
             if (xPos + table.tableWidth > table.tableX && Math.abs(yPos - table.tableY) < table.tableHeight) {
                 switch (lastDirection) {
-                    case Input.Keys.UP:
+                    case Input.Keys.W:
                         yPos = table.tableY + table.tableWidth;
                         break;
-                    case Input.Keys.DOWN:
+                    case Input.Keys.S:
                         yPos = table.tableY - heroHeight;
                         break;
-                    case Input.Keys.LEFT:
+                    case Input.Keys.A:
                         xPos = table.tableX - heroWidth;
                         break;
-                    case Input.Keys.RIGHT:
+                    case Input.Keys.D:
                         xPos = table.tableX + table.tableWidth;
                         break;
                 }
@@ -133,7 +134,7 @@ public class Player extends InputAdapter {
                 collisionDetected = true;
                 animationTimer += deltaTime;
                 battle(this, goblin);
-                goblin.goblinSprite.setAlpha(0);
+                goblin.isAlive = !goblin.isAlive;
 
 
             if (animationTimer > frameDuration) {
@@ -153,7 +154,7 @@ public class Player extends InputAdapter {
         animationTimer += deltaTime;
         isMoving = false;
 
-        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
             yPos += speed * deltaTime;
 
             if (animationTimer > frameDuration) {
@@ -167,9 +168,9 @@ public class Player extends InputAdapter {
             }
 
             isMoving = true;
-            lastDirection = Input.Keys.UP;
+            lastDirection = Input.Keys.W;
 
-            } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
                 yPos -= speed * deltaTime;
 
                 if (animationTimer > frameDuration) {
@@ -183,10 +184,10 @@ public class Player extends InputAdapter {
                 }
 
                 isMoving = true;
-                lastDirection = Input.Keys.DOWN;
+                lastDirection = Input.Keys.S;
             }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             xPos -= speed * deltaTime;
 
             if (animationTimer > frameDuration) {
@@ -201,9 +202,9 @@ public class Player extends InputAdapter {
             }
 
             isMoving = true;
-            lastDirection = Input.Keys.LEFT;
+            lastDirection = Input.Keys.A;
 
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
             xPos += speed * deltaTime;
 
             if (animationTimer > frameDuration) {
@@ -217,21 +218,21 @@ public class Player extends InputAdapter {
             }
 
             isMoving = true;
-            lastDirection = Input.Keys.RIGHT;
+            lastDirection = Input.Keys.D;
         }
 
         if (!isMoving) {
             switch (lastDirection) {
-                case Input.Keys.UP:
+                case Input.Keys.W:
                     playerSprite.setRegion(atlas.findRegion("hero_backwards"));
                     break;
-                case Input.Keys.DOWN:
+                case Input.Keys.S:
                     playerSprite.setRegion(atlas.findRegion("hero"));
                     break;
-                case Input.Keys.LEFT:
+                case Input.Keys.A:
                     playerSprite.setRegion(atlas.findRegion("hero_facing_left"));
                     break;
-                case Input.Keys.RIGHT:
+                case Input.Keys.D:
                     playerSprite.setRegion(atlas.findRegion("hero_facing_right"));
                     break;
                 default:
@@ -248,7 +249,7 @@ public class Player extends InputAdapter {
     public void checkSprite(TextureAtlas atlas) {
         for (int i = 0; i < weapons.size(); i++) {
             if (weapons.get(i) == sword) {
-                if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+                if (Gdx.input.isKeyPressed(Input.Keys.W)) {
 
                     if (animationTimer > frameDuration) {
                         playerSprite.setRegion(atlas.findRegion(("hero_backwards_walking_left")));
@@ -261,9 +262,9 @@ public class Player extends InputAdapter {
                     }
 
                     isMoving = true;
-                    lastDirection = Input.Keys.UP;
+                    lastDirection = Input.Keys.W;
 
-                } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+                } else if (Gdx.input.isKeyPressed(Input.Keys.S)) {
 
                     if (animationTimer > frameDuration) {
                         playerSprite.setRegion(atlas.findRegion("hero_with_sword_walking_left_foot"));
@@ -276,8 +277,8 @@ public class Player extends InputAdapter {
                     }
 
                     isMoving = true;
-                    lastDirection = Input.Keys.DOWN;
-                } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+                    lastDirection = Input.Keys.S;
+                } else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
 
                     if (animationTimer > frameDuration) {
                         playerSprite.setRegion(atlas.findRegion("hero_facing_left_with_sword"));
@@ -290,8 +291,8 @@ public class Player extends InputAdapter {
                     }
 
                     isMoving = true;
-                    lastDirection = Input.Keys.LEFT;
-                } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+                    lastDirection = Input.Keys.A;
+                } else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
 
                     if (animationTimer > frameDuration) {
                         playerSprite.setRegion(atlas.findRegion("hero_facing_right_with_sword"));
@@ -304,21 +305,21 @@ public class Player extends InputAdapter {
                     }
 
                     isMoving = true;
-                    lastDirection = Input.Keys.RIGHT;
+                    lastDirection = Input.Keys.D;
                 }
 
                 if (!isMoving) {
                     switch (lastDirection) {
-                        case Input.Keys.UP:
+                        case Input.Keys.W:
                             playerSprite.setRegion(atlas.findRegion("hero_backwards"));
                             break;
-                        case Input.Keys.DOWN:
+                        case Input.Keys.S:
                             playerSprite.setRegion(atlas.findRegion("hero_with_sword"));
                             break;
-                        case Input.Keys.LEFT:
+                        case Input.Keys.A:
                             playerSprite.setRegion(atlas.findRegion("hero_facing_left_with_sword"));
                             break;
-                        case Input.Keys.RIGHT:
+                        case Input.Keys.D:
                             playerSprite.setRegion(atlas.findRegion("hero_facing_right_with_sword"));
                             break;
                         default:
