@@ -29,14 +29,14 @@ public class MyTable {
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+        debugButtonSkin = new Skin(Gdx.files.internal("ui/buttonStyle.json"));
+        invButtonSkin = new Skin(Gdx.files.internal("ui/invButtonStyle.json"));
+        labelSkin = new Skin(Gdx.files.internal("Fonts/labelStyle.json"));
         stageTable = new Table();
         stageTable.top().left();
         stageTable.setFillParent(true);
         stage.addActor(stageTable);
-        stageTable.setDebug(true);
-        debugButtonSkin = new Skin(Gdx.files.internal("ui/buttonStyle.json"));
-        invButtonSkin = new Skin(Gdx.files.internal("ui/invButtonStyle.json"));
-        labelSkin = new Skin(Gdx.files.internal("Fonts/labelStyle.json"));
+        stageTable.setDebug(false);
         Button debugButton = new Button(debugButtonSkin);
         Button invButton = new Button(invButtonSkin);
         Label label = new Label("", labelSkin);
@@ -60,7 +60,7 @@ public class MyTable {
                 isInvOpen = !isInvOpen;
                 label.setVisible(isInvOpen);
                 if (isInvOpen) {
-                    if (player.weapons.isEmpty()) {
+                    if (Player.weapons.isEmpty()) { // come back and check if weapons has sword.
                         label.setText("");
                     } else {
                         label.setText(sword.toString());

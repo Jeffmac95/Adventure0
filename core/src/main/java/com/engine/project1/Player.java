@@ -31,6 +31,7 @@ public class Player extends InputAdapter {
     public float frameDuration = 0.2f;
 
     Asset table;
+    Asset holeInFloor;
     Goblin goblin;
 
 
@@ -44,6 +45,7 @@ public class Player extends InputAdapter {
         weapons = new ArrayList<>();
         table = new Asset(atlas);
         goblin = new Goblin(atlas);
+        holeInFloor = new Asset(atlas);
     }
 
     public void draw(SpriteBatch spriteBatch) {
@@ -147,6 +149,10 @@ public class Player extends InputAdapter {
             }
         } else {
             collisionDetected = false;
+        }
+
+        if (xPos == holeInFloor.holeX && yPos == holeInFloor.holeY) {
+            System.out.println("Collided with hole in floor.");
         }
     }
 

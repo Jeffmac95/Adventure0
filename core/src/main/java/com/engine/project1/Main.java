@@ -28,6 +28,7 @@ public class Main extends ApplicationAdapter {
     public Goblin goblinOne;
     public Asset table;
     public Asset bed;
+    public Asset holeInFloor;
     float deltaTime;
     public MyTable myTable;
     public ShapeRenderer shapeRenderer;
@@ -37,6 +38,7 @@ public class Main extends ApplicationAdapter {
     public float viewportHeight = 480f;
     public Texture texture;
     public BitmapFont font;
+
 
 
     @Override
@@ -49,6 +51,7 @@ public class Main extends ApplicationAdapter {
         goblinOne = new Goblin(atlas);
         table = new Asset(atlas);
         bed = new Asset(atlas);
+        holeInFloor = new Asset(atlas);
         shapeRenderer = new ShapeRenderer();
         font = new BitmapFont(Gdx.files.internal("Fonts/my_font.fnt"));
         camera = new OrthographicCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -78,6 +81,7 @@ public class Main extends ApplicationAdapter {
         hero.inputHandling(deltaTime, atlas);
         table.draw(spriteBatch);
         bed.draw(spriteBatch);
+        holeInFloor.draw(spriteBatch);
         goblinOne.draw(spriteBatch);
         hero.draw(spriteBatch);
         sword.draw(spriteBatch);
@@ -90,6 +94,7 @@ public class Main extends ApplicationAdapter {
         sword.updateRectangle();
         table.updateRectangle();
         goblinOne.updateRectangle();
+        holeInFloor.updateRectangle();
 
         myTable.stage.act(deltaTime);
         myTable.stage.draw();
@@ -104,6 +109,7 @@ public class Main extends ApplicationAdapter {
             shapeRenderer.rect(hero.playerRectangle.x, hero.playerRectangle.y, hero.playerRectangle.width, hero.playerRectangle.height);
             shapeRenderer.rect(goblinOne.xPos, goblinOne.yPos, goblinOne.goblinWidth, goblinOne.goblinHeight);
             shapeRenderer.rect(table.tableX, table.tableY, table.tableWidth, table.tableHeight);
+            shapeRenderer.rect(holeInFloor.holeX, holeInFloor.holeY, holeInFloor.holeSize, holeInFloor.holeSize);
             shapeRenderer.end();
 
         }
