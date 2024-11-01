@@ -14,12 +14,11 @@ public class Goblin {
     public int goblinWidth = 64;
     public int goblinHeight = 64;
     public float xPos = Main.SCREEN_WIDTH - goblinWidth;
-    public float yPos = Main.SCREEN_HEIGHT - goblinHeight;
+    public float yPos = Main.SCREEN_HEIGHT / 2 - goblinHeight;
     public float hp = 50.0f;
     public int strength = 5;
     public Rectangle goblinRectangle;
     public Rectangle deadGoblinRectangle;
-    public boolean isAlive = true;
 
 
     public Goblin(TextureAtlas atlas) {
@@ -34,21 +33,17 @@ public class Goblin {
     }
 
     public void draw(SpriteBatch spriteBatch) {
-        if (!isAlive) {
-            deadGoblinSprite.draw(spriteBatch);
-        } else {
             goblinSprite.draw(spriteBatch);
-        }
+    }
+
+    public void drawDeadGoblin(SpriteBatch spriteBatch) {
+            deadGoblinSprite.draw(spriteBatch);
     }
 
     public void updateRectangle() {
-        if (!isAlive) {
             goblinSprite.setPosition(xPos, yPos);
             goblinRectangle.setPosition(xPos, yPos);
-
-        } else {
             deadGoblinSprite.setPosition(xPos, yPos);
             deadGoblinRectangle.setPosition(xPos, yPos);
-        }
     }
 }

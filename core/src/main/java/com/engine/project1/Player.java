@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
@@ -25,22 +26,25 @@ public class Player extends InputAdapter {
     public int lastDirection = Input.Keys.DOWN;
     Rectangle playerRectangle;
     Weapon sword;
+    MyTable myTable;
     public boolean collisionDetected = false;
     public static ArrayList<Weapon> weapons;
     public float animationTimer = 0.0f;
     public float frameDuration = 0.2f;
+    public String stringFormat;
 
     Asset table;
     Asset holeInFloor;
     Goblin goblin;
 
 
-    public Player(TextureAtlas atlas, Weapon sword) {
+    public Player(TextureAtlas atlas, Weapon sword, MyTable myTable) {
 
         playerSprite = new Sprite(atlas.findRegion("hero"));
         playerSprite.setSize(heroWidth, heroHeight);
         playerRectangle = new Rectangle(xPos, yPos, heroWidth, heroHeight);
         this.sword = sword;
+        this.myTable = myTable;
 
         weapons = new ArrayList<>();
         table = new Asset(atlas);
@@ -57,6 +61,10 @@ public class Player extends InputAdapter {
         playerRectangle.setPosition(xPos, yPos);
     }
 
+    public void setMyTable(MyTable myTable) {
+        this.myTable = myTable;
+    }
+
     public void battle(Player player, Goblin goblin) {
 
         char attackTurn = 'p';
@@ -64,19 +72,21 @@ public class Player extends InputAdapter {
             if (attackTurn == 'p') {
                 System.out.println("player attacks goblin");
                 goblin.hp -= player.strength;
-                System.out.println("goblin hp remaining: " + goblin.hp);
+                stringFormat = String.format("player did %02d damage.\n goblin hp remaining: %.02f\n", strength, goblin.hp);
+                System.out.println(stringFormat);
+                myTable.infoLabel.setText(stringFormat);
 
-                    if (goblin.hp <= 0) {
+                if (goblin.hp <= 0) {
                         System.out.println("goblin died.");
                         goblin.hp = 0;
-                        goblin.isAlive = false;
                         break;
                     }
                     attackTurn = 'g';
             } else {
                     System.out.println("goblin attacks player");
                     player.hp -= goblin.strength;
-                    System.out.println("player hp remaining: " + player.hp);
+                    stringFormat = String.format("goblin did %02d damage. player hp remaining: %.02f", goblin.strength, hp);
+                    System.out.println(stringFormat);
 
                     if (player.hp <= 0) {
                         System.out.println("player died.");
@@ -136,7 +146,10 @@ public class Player extends InputAdapter {
                 collisionDetected = true;
                 animationTimer += deltaTime;
                 battle(this, goblin);
-                goblin.isAlive = !goblin.isAlive;
+
+                if (goblin.hp <= 0) {
+                    System.out.println("goblin's already dead.");
+                }
 
 
             if (animationTimer > frameDuration) {
@@ -153,6 +166,7 @@ public class Player extends InputAdapter {
 
         if (xPos == holeInFloor.holeX && yPos == holeInFloor.holeY) {
             System.out.println("Collided with hole in floor.");
+
         }
     }
 

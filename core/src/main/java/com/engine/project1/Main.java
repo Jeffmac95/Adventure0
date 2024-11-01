@@ -29,6 +29,7 @@ public class Main extends ApplicationAdapter {
     public Asset table;
     public Asset bed;
     public Asset holeInFloor;
+    public Asset fire;
     float deltaTime;
     public MyTable myTable;
     public ShapeRenderer shapeRenderer;
@@ -38,6 +39,7 @@ public class Main extends ApplicationAdapter {
     public float viewportHeight = 480f;
     public Texture texture;
     public BitmapFont font;
+    float stateTime = 0f;
 
 
 
@@ -47,11 +49,12 @@ public class Main extends ApplicationAdapter {
         atlas = new TextureAtlas(Gdx.files.internal("Atlas/game_atlas_newnew.atlas"));
         spriteBatch = new SpriteBatch();
         sword = new Weapon(atlas);
-        hero = new Player(atlas, sword);
+        hero = new Player(atlas, sword, myTable);
         goblinOne = new Goblin(atlas);
         table = new Asset(atlas);
         bed = new Asset(atlas);
         holeInFloor = new Asset(atlas);
+        fire = new Asset(atlas);
         shapeRenderer = new ShapeRenderer();
         font = new BitmapFont(Gdx.files.internal("Fonts/my_font.fnt"));
         camera = new OrthographicCamera(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -59,6 +62,7 @@ public class Main extends ApplicationAdapter {
         camera.update();
         texture = new Texture("texturetwo.png");
         myTable = new MyTable(atlas);
+        hero.setMyTable(myTable);
     }
 
 
@@ -69,22 +73,33 @@ public class Main extends ApplicationAdapter {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1.0f);
 
         deltaTime = Gdx.graphics.getDeltaTime();
+        stateTime += Gdx.graphics.getDeltaTime();
 
 
         spriteBatch.setProjectionMatrix(camera.combined);
 
+        TextureRegion region = fire.fireAnimation.getKeyFrame(stateTime, true);
+        fire.fire.setRegion(region);
+
         spriteBatch.begin();
 
-        spriteBatch.draw(texture, 0, 0); //background
+        if (hero.xPos == holeInFloor.holeX && hero.yPos == holeInFloor.holeY) {
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            Gdx.gl.glClearColor(0f, 0f, 0f, 1.0f);
+            fire.fire.draw(spriteBatch);
+            fire.fire.setPosition(fire.fireX, fire.fireY);
+        } else {
+            spriteBatch.draw(texture, 0, 0); //background
+            table.draw(spriteBatch);
+            sword.draw(spriteBatch);
+            goblinOne.draw(spriteBatch);
+        }
 
         hero.checkSprite(atlas);
         hero.inputHandling(deltaTime, atlas);
-        table.draw(spriteBatch);
-        bed.draw(spriteBatch);
-        holeInFloor.draw(spriteBatch);
-        goblinOne.draw(spriteBatch);
+        // bed.draw(spriteBatch);
+        //holeInFloor.draw(spriteBatch);
         hero.draw(spriteBatch);
-        sword.draw(spriteBatch);
         hero.checkCollision(deltaTime, atlas);
         //font.draw(spriteBatch, "TEST", 0, Gdx.graphics.getHeight());
 
@@ -95,6 +110,7 @@ public class Main extends ApplicationAdapter {
         table.updateRectangle();
         goblinOne.updateRectangle();
         holeInFloor.updateRectangle();
+
 
         myTable.stage.act(deltaTime);
         myTable.stage.draw();

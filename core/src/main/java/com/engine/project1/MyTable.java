@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import org.w3c.dom.Text;
 
 public class MyTable {
 
@@ -24,6 +23,7 @@ public class MyTable {
     public boolean isInvOpen = false;
     Weapon sword;
     Player player;
+    public Label infoLabel;
 
     public MyTable(TextureAtlas atlas) {
 
@@ -39,14 +39,19 @@ public class MyTable {
         stageTable.setDebug(false);
         Button debugButton = new Button(debugButtonSkin);
         Button invButton = new Button(invButtonSkin);
-        Label label = new Label("", labelSkin);
-        label.setAlignment(Align.center);
-        label.setVisible(false);
+        Label invLabel = new Label("", labelSkin);
+        infoLabel = new Label("", labelSkin);
+        invLabel.setAlignment(Align.center);
+        invLabel.setVisible(false);
+        infoLabel.setAlignment(Align.center);
+        infoLabel.setVisible(true);
         stageTable.add(debugButton).width(100).height(50);
         stageTable.add(invButton).width(75).height(50);
-        stageTable.add(label).width(225).height(75);
+        stageTable.add(invLabel).width(225).height(75);
+        stageTable.add(infoLabel).width(200).height(100);
         sword = new Weapon(atlas);
-        player = new Player(atlas, sword);
+        player = new Player(atlas, sword, this);
+        player.setMyTable(this);
 
         debugButton.addListener(new ChangeListener() {
             @Override
@@ -58,12 +63,12 @@ public class MyTable {
             @Override
             public void changed(ChangeEvent changeEvent, Actor actor) {
                 isInvOpen = !isInvOpen;
-                label.setVisible(isInvOpen);
+                invLabel.setVisible(isInvOpen);
                 if (isInvOpen) {
                     if (Player.weapons.isEmpty()) { // come back and check if weapons has sword.
-                        label.setText("");
+                        invLabel.setText("");
                     } else {
-                        label.setText(sword.toString());
+                        invLabel.setText(sword.toString());
                     }
                 }
             }
